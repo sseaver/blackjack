@@ -75,6 +75,12 @@ class Hand:
         else:
             pass
 
+        if self.player_hand_value > 21:
+            print ("BUST! You lose!")
+            return False
+        else:
+            continue
+
 class Player:
 
     def __init__(self, name):
@@ -93,7 +99,6 @@ class Game:
         self.chips = self.chips + amount
 
 
-
 player1 = Player("Player 1")
 dealer = Player("Dealer")
 deck = Deck()
@@ -108,12 +113,16 @@ dealer_hand.deal_card()
 player1_hand.deal_card()
 
 dealer_hand.deal_card()
-
+print ("Player 1 Hand")
 player1_hand.show_hand()
+print ("Dealer Hand")
 dealer_hand.show_hand()
 player1_hand.add_value()
 dealer_hand.add_value()
 
 player1_hand.play()
+print ("Player 1 Hand")
 player1_hand.show_hand()
-player1_hand.add_value()
+print ("")
+print ("Dealer Hand")
+dealer_hand.show_hand()
