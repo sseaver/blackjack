@@ -56,6 +56,7 @@ class Hand:
         new_card = deck.new_card()
         self.player_hand.append(new_card)
 
+
     def show_hand(self):
         for card in self.player_hand:
             print (card.rank, card.suit)
@@ -65,17 +66,33 @@ class Hand:
             self.player_hand_value += card.value
         print (self.player_hand_value)
 
+    def play(self):
+        new_card = deck.new_card()
+        print ("You have {}".format(self.player_hand_value))
+        choice = input("Would you like to [h]it or [s]tand? \n>")
+        if choice == "h":
+            self.player_hand.append(new_card)
+        else:
+            pass
+
 class Player:
 
     def __init__(self, name):
         self.hand = Hand(name)
-    #     self.chips = 100
-    #
-    # def total_chips(self):
-    #     return self.chips
-    #
-    # def add_chips(self, amount):
-    #     self.chips = self.chips + amount
+
+
+class Game:
+
+    def __init__(self, chips):
+        self.chips = 100
+
+    def total_chips(self):
+        return self.chips
+
+    def add_chips(self, amount):
+        self.chips = self.chips + amount
+
+
 
 player1 = Player("Player 1")
 dealer = Player("Dealer")
@@ -83,6 +100,7 @@ deck = Deck()
 
 player1_hand = Hand(player1)
 dealer_hand = Hand(dealer)
+
 deck.shuffle_cards()
 player1_hand.deal_card()
 dealer_hand.deal_card()
@@ -95,3 +113,7 @@ player1_hand.show_hand()
 dealer_hand.show_hand()
 player1_hand.add_value()
 dealer_hand.add_value()
+
+player1_hand.play()
+player1_hand.show_hand()
+player1_hand.add_value()
