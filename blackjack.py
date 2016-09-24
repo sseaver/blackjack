@@ -69,17 +69,34 @@ class Hand:
     def play(self):
         new_card = deck.new_card()
         print ("You have {}".format(self.player_hand_value))
-        choice = input("Would you like to [h]it or [s]tand? \n>")
-        if choice == "h":
-            self.player_hand.append(new_card)
-        else:
-            pass
-
         if self.player_hand_value > 21:
             print ("BUST! You lose!")
             return False
+        choice = input("Would you like to [h]it or [s]tand? \n>")
+        if choice == "h":
+            self.player_hand.append(new_card)
+            self.player_hand_value += new_card.value
+            return True
+        elif choice != "h":
+            pass
+
+    def dealer_move(self):
+        new_card = deck.new_card()
+        if self. player_hand_value < 17:
+            self.player_hand.append(new_card)
+            self.player_hand_value += new_card.value
+            return True
         else:
-            continue
+            return False
+
+    def end_of_game(self):
+        if player1_hand.player_hand_value > dealer_hand.player_hand_value:
+            print ("Congrats! You win!")
+        elif dealer_hand.player_hand_value > 21:
+            print ("Dealer has busted! You win!")
+        else:
+            print ("The dealer has won.")
+
 
 class Player:
 
@@ -120,9 +137,10 @@ dealer_hand.show_hand()
 player1_hand.add_value()
 dealer_hand.add_value()
 
-player1_hand.play()
-print ("Player 1 Hand")
-player1_hand.show_hand()
-print ("")
-print ("Dealer Hand")
-dealer_hand.show_hand()
+while player1_hand.play():
+    print ("Player 1 Hand")
+    player1_hand.show_hand()
+    print ("")
+    print ("Dealer Hand")
+    dealer_hand.show_hand()
+    dealer_hand.dealer_move()
