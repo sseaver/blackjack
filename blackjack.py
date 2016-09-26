@@ -30,9 +30,6 @@ class Deck:
             for rank, value in ranks.items():
                 self.card_list.append(Card(suit, rank, value))
 
-    def size(self):
-        return len(self.card_list)
-
     def shuffle_cards(self):
         shuffle(self.card_list)
         return self.card_list
@@ -56,10 +53,14 @@ class Hand:
         new_card = deck.new_card()
         self.player_hand.append(new_card)
 
-
     def show_hand(self):
         for card in self.player_hand:
             print (card.rank, card.suit)
+            print ("You have {}".format(self.player_hand_value))
+            if card.rank == "A" and self.player_hand_value < 12:
+                self.player_hand_value += 10
+            else:
+                pass
 
     def add_value(self):
         for card in self.player_hand:
@@ -68,7 +69,6 @@ class Hand:
 
     def play(self):
         new_card = deck.new_card()
-        print ("You have {}".format(self.player_hand_value))
         if self.player_hand_value > 21:
             print ("BUST! You lose!")
             return False
@@ -85,6 +85,9 @@ class Hand:
         if self. player_hand_value < 17:
             self.player_hand.append(new_card)
             self.player_hand_value += new_card.value
+            return True
+        elif self.player_hand_value == 21:
+            print ("Blackjack! Dealer has won.")
             return True
         else:
             return False
@@ -119,23 +122,22 @@ class Game:
 player1 = Player("Player 1")
 dealer = Player("Dealer")
 deck = Deck()
-
 player1_hand = Hand(player1)
 dealer_hand = Hand(dealer)
 
 deck.shuffle_cards()
-player1_hand.deal_card()
-dealer_hand.deal_card()
 
 player1_hand.deal_card()
-
 dealer_hand.deal_card()
-print ("Player 1 Hand")
-player1_hand.show_hand()
-print ("Dealer Hand")
-dealer_hand.show_hand()
+player1_hand.deal_card()
+dealer_hand.deal_card()
 player1_hand.add_value()
 dealer_hand.add_value()
+print ("Player 1 Hand")
+player1_hand.show_hand()
+print ("")
+print ("Dealer Hand")
+dealer_hand.show_hand()
 
 while player1_hand.play():
     print ("Player 1 Hand")
@@ -143,4 +145,18 @@ while player1_hand.play():
     print ("")
     print ("Dealer Hand")
     dealer_hand.show_hand()
+    print ("\n \n")
     dealer_hand.dealer_move()
+    print ("Player 1 Hand")
+    player1_hand.show_hand()
+    print ("")
+    print ("Dealer Hand")
+    dealer_hand.show_hand()
+    break
+
+print ("Player 1 Hand")
+player1_hand.show_hand()
+print ("")
+print ("Dealer Hand")
+dealer_hand.show_hand()
+player1_hand.end_of_game()
